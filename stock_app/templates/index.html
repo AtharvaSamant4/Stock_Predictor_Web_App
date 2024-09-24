@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price Prediction</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="bg-primary text-white text-center py-4">
+        <h1>Stock Price Prediction</h1>
+    </header>
+
+    <div class="container mt-5">
+        <form action="/predict" method="POST" class="bg-light p-4 rounded shadow">
+            <h3>Select Stock Symbol:</h3>
+            <div class="form-group">
+                <label for="symbol">Choose a symbol:</label>
+                <select id="symbol" name="symbol" class="form-control" required>
+                    <option value="GOOG">Google (GOOG)</option>
+                    <option value="AAPL">Apple (AAPL)</option>
+                    <option value="TSLA">Tesla (TSLA)</option>
+                    <option value="DJT">Trump Media (DJT)</option>
+                    <option value="TSM">Taiwan Semiconductor (TSM)</option>
+                    <option value="SEDG">SolarEdge (SEDG)</option>
+                    <option value="ELF">e.l.f. Beauty (ELF)</option>
+                    <option value="RITM">Rithm Capital (RITM)</option>
+                    <option value="COMP">Compass (COMP)</option>
+                    <option value="RLAY">Relay Therapeutics (RLAY)</option>
+                    <option value="SIRI">Sirius XM (SIRI)</option>
+                    <option value="JPM">JPMorgan (JPM)</option>
+                    <option value="AMZN">Amazon (AMZN)</option>
+                    <option value="NOW">ServiceNow (NOW)</option>
+                </select>
+            </div>
+
+            <h3>Or Enter Custom Stock Data:</h3>
+            <div class="form-group">
+                <label for="open">Open Price:</label>
+                <input type="number" id="open" name="open" class="form-control" step="any" placeholder="Enter open price">
+            </div>
+            <div class="form-group">
+                <label for="high">High Price:</label>
+                <input type="number" id="high" name="high" class="form-control" step="any" placeholder="Enter high price">
+            </div>
+            <div class="form-group">
+                <label for="low">Low Price:</label>
+                <input type="number" id="low" name="low" class="form-control" step="any" placeholder="Enter low price">
+            </div>
+            <div class="form-group">
+                <label for="close">Close Price:</label>
+                <input type="number" id="close" name="close" class="form-control" step="any" placeholder="Enter close price">
+            </div>
+            <div class="form-group">
+                <label for="volume">Volume:</label>
+                <input type="number" id="volume" name="volume" class="form-control" placeholder="Enter volume">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Predict</button>
+        </form>
+
+        {% if prediction %}
+            <div class="alert alert-success mt-4">
+                <h4>{{ prediction }}</h4>
+            </div>
+        {% endif %}
+
+        {% if error %}
+            <div class="alert alert-danger mt-4">
+                <p>Error: {{ error }}</p>
+            </div>
+        {% endif %}
+
+        {% if plot_html %}
+            <div class="plot mt-4">
+                {{ plot_html | safe }}
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
